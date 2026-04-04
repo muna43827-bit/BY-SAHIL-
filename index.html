@@ -3,178 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Elite Bonds | Premium Experience</title>
+    <title>Elite Luxury Bonds | The Ultimate Experience</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap');
-        
-        :root { --gold: #ffd700; --glass: rgba(0, 0, 0, 0.75); }
+        :root { --gold: #ffd700; --glass: rgba(0, 0, 0, 0.8); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        
-        body, html { 
-            width: 100%; height: 100%; 
-            background: #000; color: #fff; 
-            font-family: 'Poppins', sans-serif; 
-            overflow: hidden; 
-        }
+        body, html { width: 100%; height: 100%; background: #000; color: #fff; font-family: 'Poppins', sans-serif; overflow: hidden; }
 
-        /* HD Background Fix */
+        /* Background Fix */
         .screen { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             display: none; flex-direction: column; justify-content: center; 
-            align-items: center; padding: 25px; text-align: center;
-            background-size: cover; 
-            background-position: center; 
-            background-repeat: no-repeat;
-            transition: opacity 0.8s ease;
+            align-items: center; padding: 20px; text-align: center;
+            background-size: cover; background-position: center; transition: 0.8s;
         }
         .active { display: flex; opacity: 1; z-index: 100; }
-        .screen::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: -1; }
+        .screen::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: -1; }
 
         /* Generator UI */
-        #generator { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: radial-gradient(circle, #222, #000); }
-        .input-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 90%; max-width: 400px; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #444; background: #1a1a1a; color: #fff; }
+        #generator { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: radial-gradient(circle, #1a1a1a, #000); overflow-y: auto; padding: 20px; }
+        .input-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 400px; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #444; background: #111; color: #fff; font-size: 0.9rem; }
         .btn-gold { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 12px; font-weight: 900; cursor: pointer; width: 100%; margin-top: 10px; text-transform: uppercase; }
 
-        /* Elements */
-        .luxury-card { background: var(--glass); backdrop-filter: blur(20px); padding: 25px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.2); width: 100%; max-width: 400px; z-index: 10; }
-        h2 { font-family: 'Playfair Display', serif; color: var(--gold); margin-bottom: 10px; }
-        .nav-btn { background: var(--gold); color: #000; border: none; padding: 12px 30px; border-radius: 50px; font-weight: bold; margin-top: 20px; cursor: pointer; }
+        /* Text Styling */
+        .luxury-card { background: var(--glass); backdrop-filter: blur(15px); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); width: 100%; max-width: 420px; position: relative; z-index: 10; }
+        h2 { font-family: 'Playfair Display', serif; color: var(--gold); margin-bottom: 15px; line-height: 1.2; }
+        p { font-size: 1.1rem; line-height: 1.6; font-style: italic; }
+        .nav-btn { background: var(--gold); color: #000; border: none; padding: 12px 35px; border-radius: 50px; font-weight: bold; margin-top: 25px; cursor: pointer; transition: 0.3s; }
 
-        /* Cute Pet Animation */
-        .cute-pet { position: absolute; width: 80px; z-index: 5; bottom: 20px; animation: bounce 2s infinite ease-in-out; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        /* Animated Pets */
+        .pet-left, .pet-right { position: absolute; width: 70px; bottom: -40px; z-index: 20; }
+        .pet-left { left: -20px; animation: dance 2s infinite ease-in-out; }
+        .pet-right { right: -20px; animation: dance 2s infinite reverse ease-in-out; }
+        @keyframes dance { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(10deg); } }
 
-        /* Rain effect */
+        /* Floating Items */
         .floating-item { position: absolute; pointer-events: none; z-index: 1000; animation: fall linear forwards; }
         @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 
-        .cert-card { background: #fff; color: #333; padding: 25px; border-radius: 5px; width: 90%; max-width: 380px; border: 8px double #d4af37; text-align: center; }
-        .signature { font-family: 'Great Vibes', cursive; font-size: 1.8rem; border-bottom: 1px solid #333; display: inline-block; padding: 0 10px; }
+        .cert-card { background: #fff; color: #333; padding: 20px; border-radius: 5px; width: 95%; max-width: 380px; border: 10px double #d4af37; box-shadow: 0 0 30px gold; }
+        .signature { font-family: 'Great Vibes', cursive; font-size: 1.8rem; border-bottom: 2px solid #333; min-width: 100px; display: inline-block; }
     </style>
 </head>
 <body>
 
 <div id="generator">
-    <h2 style="color:var(--gold); margin-bottom:15px;">Elite Experience Creator</h2>
+    <h2 style="margin-bottom:10px;">Elite Bond Creator</h2>
     <div class="input-card">
         <input type="text" id="bIn" placeholder="Apna Naam (Your Name)">
         <input type="text" id="gIn" placeholder="Unka Naam (Receiver Name)">
-        <select id="relIn">
-            <option value="gf">Girlfriend (Romantic ❤️)</option>
-            <option value="daddy">Daddy (Father & Son 🧬)</option>
-            <option value="brother">Brother (Best Bro 🤜🤛)</option>
-            <option value="sister">Sister (Sweet Sister 🌸)</option>
-            <option value="friend">Friend / Bestie (Yaara 🤝)</option>
+        
+        <label style="font-size: 12px; color: var(--gold);">Choose Event:</label>
+        <select id="eventIn">
+            <option value="birthday">Birthday Celebration 🎂</option>
+            <option value="love">Express Love ❤️</option>
+            <option value="friendship">Deep Friendship 🤝</option>
         </select>
-        <input type="text" id="sIn" placeholder="YouTube Link (Optional)">
+
+        <label style="font-size: 12px; color: var(--gold);">Choose Relation:</label>
+        <select id="relIn">
+            <option value="gf">Girlfriend / Boyfriend ❤️</option>
+            <option value="brother">Brother 🤜🤛</option>
+            <option value="sister">Sister 🌸</option>
+            <option value="friend">Best Friend 💎</option>
+        </select>
+
+        <input type="text" id="sIn" placeholder="YouTube Link (Song)">
         <button class="btn-gold" onclick="makeLink()">Generate Magic ✨</button>
+        
         <div id="resBox" style="display:none; margin-top:15px;">
-            <p id="finalLink" style="font-size:10px; word-break:break-all; color:#0f0; background:#000; padding:10px; margin-bottom:10px;"></p>
-            <button class="btn-gold" style="background:#fff" onclick="copyL()">Copy & Send ❤️</button>
+            <p id="finalLink" style="font-size:9px; word-break:break-all; background:#000; padding:10px; color:#0f0; border:1px dashed var(--gold);"></p>
+            <button class="btn-gold" style="background:#fff" onclick="copyL()">Copy & Share Link</button>
         </div>
     </div>
 </div>
 
 <div id="experience" style="display:none;">
     <div id="p1" class="screen active">
-        <h1 id="main-wish" style="font-family: 'Playfair Display'; font-size: 2.2rem;"></h1>
-        <div style="font-size: 70px; cursor: pointer; margin: 20px 0; filter: drop-shadow(0 0 10px gold);" onclick="next(2)">🎁</div>
-        <p>TAP TO UNLOCK GIFT</p>
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHY5eGZqZnd4eXh6eXh6eXh6eXh6eXh6eXh6eXh6eXh6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/3o7TKSjPqcKFBwS092/giphy.gif" class="cute-pet" style="left:10%">
+        <h1 id="wish-text" style="font-family:'Playfair Display'; font-size: 2.8rem; color:var(--gold);"></h1>
+        <div style="font-size: 80px; cursor:pointer; filter:drop-shadow(0 0 15px gold);" onclick="next(2)">🎁</div>
+        <p style="margin-top:10px;">Click the gift to start...</p>
     </div>
 
     <div id="p2" class="screen">
         <div class="luxury-card">
-            <h2 id="music-title">A Special Song</h2>
-            <iframe id="yt-frame" width="100%" height="180" src="" frameborder="0" allow="autoplay"></iframe>
+            <h2>A Soulful Melody</h2>
+            <iframe id="yt-frame" width="100%" height="180" src="" frameborder="0" allow="autoplay" style="border-radius:15px;"></iframe>
         </div>
-        <button class="nav-btn" onclick="next(3)">Next Magic</button>
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHY5eGZqZnd4eXh6eXh6eXh6eXh6eXh6eXh6eXh6eXh6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/LMc5fGZVRp5v2/giphy.gif" class="cute-pet" style="right:10%">
+        <button class="nav-btn" onclick="next(3)">Open My Heart</button>
     </div>
 
-    <div id="p3" class="screen">
-        <div class="luxury-card"><h2 id="t1">Title</h2><p id="m1">Message</p></div>
-        <button class="nav-btn" onclick="next(4)">Keep Going</button>
-    </div>
+    <div id="p3" class="screen"><div class="luxury-card"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHY5eGZqZnd4eXh6eXh6eXh6eXh6eXh6eXh6eXh6eXh6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/3o7TKSjPqcKFBwS092/giphy.gif" class="pet-left"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHY5eGZqZnd4eXh6eXh6eXh6eXh6eXh6eXh6eXh6eXh6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/LMc5fGZVRp5v2/giphy.gif" class="pet-right"><h2 id="t1"></h2><p id="m1"></p></div><button class="nav-btn" onclick="next(4)">Continue...</button></div>
+    
+    <div id="p4" class="screen"><div class="luxury-card"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHY5eGZqZnd4eXh6eXh6eXh6eXh6eXh6eXh6eXh6eXh6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/26hpKpxWVKvDLfAA8/giphy.gif" class="pet-left"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHY5eGZqZnd4eXh6eXh6eXh6eXh6eXh6eXh6eXh6eXh6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/vNpx56a9Kz0oE/giphy.gif" class="pet-right"><h2 id="t2"></h2><p id="m2"></p></div><button class="nav-btn" onclick="next(5)">And then...</button></div>
+    
+    <div id="p5" class="screen"><div class="luxury-card"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHY5eGZqZnd4eXh6eXh6eXh6eXh6eXh6eXh6eXh6eXh6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/3o7TKD5lAszNDS5TCE/giphy.gif" class="pet-left"><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHY5eGZqZnd4eXh6eXh6eXh6eXh6eXh6eXh6eXh6eXh6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/LMc5fGZVRp5v2/giphy.gif" class="pet-right"><h2 id="t3"></h2><p id="m3"></p></div><button class="nav-btn" onclick="next(6)">One More Step</button></div>
+    
+    <div id="p6" class="screen"><div class="luxury-card"><h2 id="t4">Final Question</h2><p id="m4"></p></div><div style="display:flex; gap:10px; margin-top:20px;"><button class="nav-btn" style="background:#2ecc71; color:#fff;" onclick="next(7)">YES! ✅</button><button id="no-btn" class="nav-btn" style="background:#ff4757; color:#fff;" onmouseover="dodge()">NO ❌</button></div></div>
 
-    <div id="p4" class="screen">
-        <div class="luxury-card"><h2 id="t2">Title</h2><p id="m2">Message</p></div>
-        <button class="nav-btn" onclick="next(5)">One More Thing</button>
-    </div>
-
-    <div id="p5" class="screen">
-        <h1 id="question" style="color:var(--gold);"></h1>
-        <div class="luxury-card"><p id="m3"></p></div>
-        <div style="display:flex; gap:15px; margin-top:20px;">
-            <button class="nav-btn" style="background:#2ecc71; color:white;" onclick="next(6)">YES! ✅</button>
-            <button id="no-btn" class="nav-btn" style="background:#ff4757; color:white;" onmouseover="dodge()">NO ❌</button>
-        </div>
-    </div>
-
-    <div id="p6" class="screen">
+    <div id="p7" class="screen">
         <div class="cert-card">
-            <h3 id="cert-head">CERTIFICATE</h3>
-            <p style="font-size: 12px;">This confirms the bond between:</p>
-            <div style="margin: 15px 0;">
+            <h3 id="cert-title">CERTIFICATE</h3>
+            <p style="font-size: 11px;">Official Verification of Bond:</p>
+            <div style="margin: 20px 0;">
                 <div class="signature bn"></div>
-                <p>&</p>
+                <p style="font-weight:bold;">WITH</p>
                 <div class="signature gn"></div>
             </div>
             <p id="status-text" style="color:#b8860b; font-weight:bold;"></p>
         </div>
-        <h2 id="final-wish" style="margin-top:15px;"></h2>
+        <button class="nav-btn" onclick="next(8)">Final Surprise</button>
+    </div>
+
+    <div id="p8" class="screen">
+        <h1 style="color:var(--gold); font-size:3rem; font-family:'Great Vibes';">Forever & Always</h1>
+        <div class="luxury-card"><p id="final-msg"></p></div>
+        <p style="margin-top:20px; font-weight:bold;">Created with Love ❤️</p>
     </div>
 </div>
 
 <script>
-    const content = {
-        gf: {
-            bg: "https://images.unsplash.com/photo-1518133835878-5a93cc3f89e5?q=80&w=1000&auto=format&fit=crop",
-            flw: ['❤️','🌹','✨'], t: ["Pehli Dua", "Waada", "Forever Mine?"],
-            m: ["Aapki muskurahat meri duniya hai.", "Main hamesha aapka sath nibhaunga.", "Kya aap hamesha ke liye meri banna chahungi?"],
-            cert: ["MARRIAGE CERTIFICATE", "MARRIED IN HEART ❤️", "Mubarak Ho! Shaadi Pakki 💍"]
+    const database = {
+        birthday: {
+            gf: {
+                bg: "https://images.unsplash.com/photo-1530103862676-fa394eb9765b?auto=format&fit=crop&w=1000",
+                flw: ['❤️','🎂','🌹'], t: ["Janamdin Mubarak", "My World", "My Soulmate", "The Promise"],
+                m: ["Duniya ki sabse khoobsurat ladki ko janamdin ki dher saari badhaiyan. Tum mere liye khuda ka tohfa ho.", "Aapki hansi meri kamzori hai, aur aapki khushi meri manzil.", "Aaj ke din main vaada karta hoon, har janamdin hum saath manayenge.", "Kya tum meri life-partner ban kar hamesha mera saath dogi?"],
+                cert: ["QUEEN OF MY HEART", "CERTIFIED SOULMATE ❤️", "Happy Birthday, My Love! 💍"]
+            },
+            friend: {
+                bg: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1000",
+                flw: ['🍻','🎂','🤞'], t: ["Happy B'day Yaara", "Brother from another mother", "Legacy of Dosti", "Yaari Forever"],
+                m: ["Saale! Janamdin mubarak ho. Tu dost nahi, meri jaan hai.", "Itne saalon mein duniya badal gayi, par teri meri bakchodi nahi badli.", "Chal ab jaldi se party de, warna gift wapis le jaunga!", "Hamesha mera sabse bada support system rahega na?"],
+                cert: ["BEST FRIEND FOREVER", "CERTIFIED CRIME PARTNER 🤝", "Dosti Zindabad! 💎"]
+            }
         },
-        daddy: {
-            bg: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1000&auto=format&fit=crop",
-            flw: ['✨','⭐','👑'], t: ["My Hero", "Inspiration", "Best Dad?"],
-            m: ["Aapne hamesha meri himmat badhayi.", "Main bada hokar aap jaisa banna chahta hoon.", "Kya hum world ki best Dad-Son jodi hain?"],
-            cert: ["DNA BOND CERTIFICATE", "WORLD'S BEST FATHER 🧬", "Baap-Beta No. 1! 🏆"]
-        },
-        brother: {
-            bg: "https://images.unsplash.com/photo-1552196564-972b4938662c?q=80&w=1000&auto=format&fit=crop",
-            flw: ['🔥','⚡','🤜'], t: ["Partner in Crime", "Strong Wall", "Bro Code?"],
-            m: ["Bhai tu sirf bhai nahi, meri jaan hai.", "Har mushkil mein tere sath khada hoon.", "Kya hamesha mere 'Partner in Crime' rahoge?"],
-            cert: ["BRO CODE CONTRACT", "LEGENDARY BROTHERS 🤜🤛", "Bhai-Bhai Forever! 👑"]
-        },
-        sister: {
-            bg: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1000&auto=format&fit=crop",
-            flw: ['🌸','🎀','🍬'], t: ["Angel", "Second Mother", "Sweetest Soul?"],
-            m: ["Aapki khushi mere liye sabse upar hai.", "Ghar ki raunaq aap se hi hai.", "Kya hamesha meri pyari behna ban kar rahogi?"],
-            cert: ["BOND OF PROTECTION", "BEST SISTER EVER 💖", "Behna Ka Pyar! 🍭"]
-        },
-        friend: {
-            bg: "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?q=80&w=1000&auto=format&fit=crop",
-            flw: ['🍻','🤞','💎'], t: ["Yaara", "Backbone", "Bestie Forever?"],
-            m: ["Tere jaisa yaar kahan, kahan aisa yaarana.", "Duniya badal jaye, par hum nahi badlenge.", "Hamesha sath rahega na mere yaar?"],
-            cert: ["FRIENDSHIP DEED", "TRUE BESTIES 🤝", "Dosti Zindabad! 💎"]
+        love: {
+            gf: {
+                bg: "https://images.unsplash.com/photo-1518133835878-5a93cc3f89e5?auto=format&fit=crop&w=1000",
+                flw: ['❤️','✨','💖'], t: ["Dil Ki Baat", "Shayari", "The Truth", "Lifetime Promise"],
+                m: ["Tumhe pehli baar dekha tabhi samajh gaya tha ki tum hi meri manzil ho.", "Main shayar toh nahi, magar jabse tumhe dekha, dil shayari karne laga.", "Meri har dua mein sirf tumhara naam hota hai.", "Kya tum hamesha ke liye meri ban kar rahogi?"],
+                cert: ["LOVE CONTRACT", "OFFICIALLY TAKEN ❤️", "I Love You Forever! 💍"]
+            }
         }
     };
 
     function makeLink() {
         const b = document.getElementById('bIn').value.trim();
         const g = document.getElementById('gIn').value.trim();
-        const r = document.getElementById('relIn').value;
+        const ev = document.getElementById('eventIn').value;
+        const rel = document.getElementById('relIn').value;
         const sUrl = document.getElementById('sIn').value.trim();
         
-        if(!b || !g) { alert("Please fill both names!"); return; }
+        if(!b || !g) { alert("Dono naam likho!"); return; }
 
         let sid = '-8C_2BBVWk8'; 
         if(sUrl.includes('v=')) sid = sUrl.split('v=')[1].substring(0, 11);
         else if(sUrl.includes('youtu.be/')) sid = sUrl.split('youtu.be/')[1].substring(0, 11);
 
         const base = window.location.origin + window.location.pathname;
-        const finalUrl = `${base}?boy=${encodeURIComponent(b)}&girl=${encodeURIComponent(g)}&rel=${r}&song=${sid}`;
+        const finalUrl = `${base}?boy=${encodeURIComponent(b)}&girl=${encodeURIComponent(g)}&event=${ev}&rel=${rel}&song=${sid}`;
         
         document.getElementById('finalLink').innerText = finalUrl;
         document.getElementById('resBox').style.display = 'block';
@@ -182,37 +171,33 @@
 
     function copyL() {
         navigator.clipboard.writeText(document.getElementById('finalLink').innerText);
-        alert("Link Copied! Send it now. ❤️");
+        alert("Link Copy Ho Gaya! Share Karo. ❤️");
     }
 
     const params = new URLSearchParams(window.location.search);
-    const bn = params.get('boy'), gn = params.get('girl'), rel = params.get('rel') || 'gf', sn = params.get('song');
+    const bn = params.get('boy'), gn = params.get('girl'), ev = params.get('event') || 'birthday', rel = params.get('rel') || 'gf', sn = params.get('song');
 
     if(bn && gn) {
         document.getElementById('generator').style.display = 'none';
         document.getElementById('experience').style.display = 'block';
         
-        const c = content[rel];
-        document.querySelectorAll('.screen').forEach(s => s.style.backgroundImage = `url('${c.bg}')`);
+        const cat = database[ev] && database[ev][rel] ? database[ev][rel] : database['birthday']['gf'];
+        document.querySelectorAll('.screen').forEach(s => s.style.backgroundImage = `url('${cat.bg}')`);
         
-        document.getElementById('main-wish').innerHTML = `Happy Birthday <br><span style="color:var(--gold)">${gn}</span>!`;
-        document.getElementById('t1').innerText = c.t[0];
-        document.getElementById('m1').innerText = c.m[0];
-        document.getElementById('t2').innerText = c.t[1];
-        document.getElementById('m2').innerText = c.m[1];
-        document.getElementById('question').innerText = c.t[2];
-        document.getElementById('m3').innerText = c.m[2];
-        
-        document.getElementById('cert-head').innerText = c.cert[0];
-        document.getElementById('status-text').innerText = `STATUS: ${c.cert[1]}`;
-        document.getElementById('final-wish').innerText = c.cert[2];
+        document.getElementById('wish-text').innerText = (ev === 'birthday') ? `Happy Birthday ${gn}!` : `For My Dearest ${gn}`;
+        document.getElementById('t1').innerText = cat.t[0]; document.getElementById('m1').innerText = cat.m[0];
+        document.getElementById('t2').innerText = cat.t[1]; document.getElementById('m2').innerText = cat.m[1];
+        document.getElementById('t3').innerText = cat.t[2]; document.getElementById('m3').innerText = cat.m[2];
+        document.getElementById('m4').innerText = cat.m[3];
+        document.getElementById('cert-title').innerText = cat.cert[0];
+        document.getElementById('status-text').innerText = cat.cert[1];
+        document.getElementById('final-msg').innerText = cat.cert[2];
         
         document.querySelectorAll('.bn').forEach(e => e.innerText = bn);
         document.querySelectorAll('.gn').forEach(e => e.innerText = gn);
-        
         document.getElementById('yt-frame').src = `https://www.youtube.com/embed/${sn || '-8C_2BBVWk8'}?autoplay=1`;
         
-        startRain(c.flw);
+        startRain(cat.flw);
     }
 
     function next(n) {
